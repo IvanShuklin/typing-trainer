@@ -1,0 +1,107 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  min-width: 1200px;
+  margin: 0;
+  justify-content: center;
+  background-color: rgb(245, 255, 246);
+}
+
+.display {
+  width: 1200px;
+  height: 500px;
+}
+
+.stats {
+  margin-bottom: 100px;
+  font-size: 26px;
+  text-align: center;
+}
+
+.text {
+  display: flex;
+  background-color: honeydew;
+  height: 200px;
+  font-size: 30px;
+  color: tomato;
+  border-radius: 4px;
+  justify-content: center;
+  align-items: center;
+}
+
+.keyboard {
+  border: 1px solid black;
+  padding: 5px;
+  border-radius: 4px;
+  margin: auto;
+  position: relative;
+  width: 700px;
+}
+
+.line {
+  display: flex;
+}
+
+.key {
+  float: left;
+  width: 40px;
+  height: 40px;
+  border: 1px solid black;
+  border-radius: 4px;
+  margin: 3px;
+  padding: 4px;
+  text-align: center;
+  line-height: 32px;
+  text-transform: uppercase;
+}
+
+.key:hover {
+  background-color: tomato;
+}
+
+.backspace {
+  width: 80px;
+}
+
+.tab {
+  width: 50px;
+}
+
+.capslock {
+  width: 70px;
+}
+
+.enter {
+  width: 90px;
+}
+
+.lshift {
+  width: 90px;
+}
+
+.rshift {
+  width: 120px;
+}
+
+.lctrl,
+.rctrl {
+  width: 60px;
+}
+
+.lalt,
+.ralt {
+  width: 60px;
+}
+
+.space {
+  width: 400px;
+}
+
+.letter-key {
+  font-size: 10px;
+}
