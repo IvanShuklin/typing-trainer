@@ -9,7 +9,6 @@ body {
   min-width: 1200px;
   margin: 0;
   justify-content: center;
-  background-color: rgb(245, 255, 246);
 }
 
 .display {
@@ -28,7 +27,6 @@ body {
   background-color: honeydew;
   height: 200px;
   font-size: 30px;
-  color: tomato;
   border-radius: 4px;
   justify-content: center;
   align-items: center;
@@ -104,4 +102,8 @@ body {
 
 .letter-key {
   font-size: 10px;
+}
+
+.typed {
+  white-space: pre-wrap;
 }
