@@ -33,7 +33,7 @@ body {
 }
 
 .keyboard {
-  border: 1px solid black;
+  border: 1px solid rgb(170, 170, 170);
   padding: 5px;
   border-radius: 4px;
   margin: auto;
@@ -41,69 +41,80 @@ body {
   width: 700px;
 }
 
-.line {
+.keyboard__keys {
   display: flex;
 }
 
-.key {
+.keyboard__key {
   float: left;
   width: 40px;
   height: 40px;
-  border: 1px solid black;
+  border: 1px solid rgb(170, 170, 170);
   border-radius: 4px;
   margin: 3px;
   padding: 4px;
+  font-size: 1.05rem;
   text-align: center;
   line-height: 32px;
   text-transform: uppercase;
+  outline: none;
 }
 
-.key:hover {
-  background-color: tomato;
+.keyboard__key:hover {
 }
 
 .backspace {
-  width: 80px;
+  width: 84px;
 }
 
 .tab {
-  width: 50px;
+  width: 60px;
+}
+
+.backslash {
+  width: 64px;
 }
 
 .capslock {
-  width: 70px;
+  width: 75px;
 }
 
 .enter {
-  width: 90px;
+  width: 95px;
 }
 
 .lshift {
-  width: 90px;
+  width: 100px;
 }
 
 .rshift {
-  width: 120px;
+  width: 116px;
 }
 
 .lctrl,
 .rctrl {
-  width: 60px;
+  width: 65px;
 }
 
 .lalt,
 .ralt {
-  width: 60px;
+  width: 65px;
 }
 
 .space {
-  width: 400px;
+  width: 398px;
 }
 
 .letter-key {
   font-size: 10px;
 }
 
-.typed {
+.char {
+  text-align: center;
   white-space: pre-wrap;
+}
+
+.char--current {
+  background-color: tomato;
+  width: 1.8ch;
 }

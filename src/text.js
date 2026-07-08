@@ -19,4 +19,8 @@ export class Text {
   getElements() {
     return this.elements;
   }
+
+  getCurrentElement() {
+    return this.elements[this.currentIndex];
+  }
 }

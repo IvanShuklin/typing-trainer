@@ -6,3 +6,5 @@ const textArea = document.querySelector('.text');
 const text = new Text(typingText);
 
 textArea.append(...text.getElements());
+
+text.getCurrentElement().classList.add('char--current');
