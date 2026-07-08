@@ -8,3 +8,11 @@ const text = new Text(typingText);
 textArea.append(...text.getElements());
 
 text.getCurrentElement().classList.add('char--current');
+
+document.addEventListener('keydown', () => {
+  text.getCurrentElement().classList.remove('char--current');
+
+  text.next();
+
+  text.getCurrentElement().classList.add('char--current');
+});

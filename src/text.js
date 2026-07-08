@@ -23,4 +23,8 @@ export class Text {
   getCurrentElement() {
     return this.elements[this.currentIndex];
   }
+
+  next() {
+    this.currentIndex++;
+  }
 }
