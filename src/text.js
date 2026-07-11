@@ -21,7 +21,14 @@ export class Text {
   }
 
   getCurrentElement() {
+    if (this.currentIndex >= this.elements.length) {
+      return null;
+    }
     return this.elements[this.currentIndex];
+  }
+
+  getCurrentLetter() {
+    return this.text[this.currentIndex];
   }
 
   next() {
