@@ -60,9 +60,6 @@ body {
   outline: none;
 }
 
-.keyboard__key:hover {
-}
-
 .backspace {
   width: 84px;
 }
