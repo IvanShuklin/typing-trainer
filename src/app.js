@@ -3,8 +3,13 @@ import { Text } from './classes/Text.js';
 import { Timer } from './classes/Timer.js';
 
 const textArea = document.querySelector('.text');
+const timerElement = document.querySelector('.timer');
+const secondsElement = timerElement.querySelector('.seconds');
+
 const text = new Text(typingText);
-const timer = new Timer();
+const timer = new Timer((seconds) => {
+  secondsElement.textContent = String(seconds).padStart(2, '0');
+});
 
 textArea.append(...text.getElements());
 

@@ -1,5 +1,7 @@
 export class Timer {
-  constructor() {
+  constructor(onTick) {
+    this.onTick = onTick;
+
     this.timerId = null;
     this.seconds = 0;
   }
@@ -11,7 +13,7 @@ export class Timer {
 
     this.timerId = setInterval(() => {
       this.seconds++;
-      console.log(`${this.seconds} sec`);
+      this.onTick(this.seconds);
     }, 1000);
   }
 
@@ -23,5 +25,9 @@ export class Timer {
   reset() {
     this.stop();
     this.seconds = 0;
+  }
+
+  getSeconds() {
+    return this.seconds;
   }
 }

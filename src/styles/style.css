@@ -60,6 +60,10 @@ body {
   outline: none;
 }
 
+.keyboard__key--typed {
+  background-color: tomato;
+}
+
 .backspace {
   width: 84px;
 }
