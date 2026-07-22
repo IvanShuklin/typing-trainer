@@ -7,6 +7,7 @@ const textArea = document.querySelector('.text');
 const stats = document.querySelector('.stats');
 const secondsElement = stats.querySelector('.seconds');
 const errorsElement = stats.querySelector('.errors');
+const accuracyElement = stats.querySelector('.accuracy');
 
 const text = new Text(typingText);
 const timer = new Timer((seconds) => {
@@ -43,7 +44,7 @@ document.addEventListener('keydown', (event) => {
       nextElement.classList.add('char--current');
     } else {
       timer.stop();
-      console.log('Finish!');
+      accuracyElement.textContent = statistics.getAccuracy();
     }
   } else {
     statistics.addError();

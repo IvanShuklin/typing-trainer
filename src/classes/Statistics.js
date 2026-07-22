@@ -15,4 +15,14 @@ export class Statistics {
   getErrors() {
     return this.errors;
   }
+
+  getAccuracy() {
+    const total = this.correct + this.errors;
+
+    if (total === 0) {
+      return 100;
+    }
+
+    return Math.floor((this.correct / total) * 100);
+  }
 }
