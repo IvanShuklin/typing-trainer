@@ -21,6 +21,10 @@ function renderErrors() {
   errorsElement.textContent = statistics.getErrors();
 }
 
+function renderAccuracy() {
+  accuracyElement.textContent = statistics.getAccuracy();
+}
+
 if (text.getCurrentElement()) {
   text.getCurrentElement().classList.add('char--current');
 }
@@ -33,6 +37,7 @@ document.addEventListener('keydown', (event) => {
   if (event.key === text.getCurrentLetter()) {
     timer.start();
     statistics.addCorrect();
+    renderAccuracy();
 
     currentElement.classList.remove('char--current');
 
@@ -44,10 +49,10 @@ document.addEventListener('keydown', (event) => {
       nextElement.classList.add('char--current');
     } else {
       timer.stop();
-      accuracyElement.textContent = statistics.getAccuracy();
     }
   } else {
     statistics.addError();
     renderErrors();
+    renderAccuracy();
   }
 });
