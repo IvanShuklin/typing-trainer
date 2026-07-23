@@ -8,6 +8,7 @@ const stats = document.querySelector('.stats');
 const secondsElement = stats.querySelector('.seconds');
 const errorsElement = stats.querySelector('.errors');
 const accuracyElement = stats.querySelector('.accuracy');
+const wpmElement = stats.querySelector('.wpm');
 
 const text = new Text(typingText);
 const timer = new Timer((seconds) => {
@@ -25,6 +26,16 @@ function renderAccuracy() {
   accuracyElement.textContent = statistics.getAccuracy();
 }
 
+function renderWPM() {
+  wpmElement.textContent = statistics.getWPM(timer.getSeconds());
+}
+
+function renderStatistics() {
+  renderErrors();
+  renderAccuracy();
+  renderWPM();
+}
+
 if (text.getCurrentElement()) {
   text.getCurrentElement().classList.add('char--current');
 }
@@ -37,7 +48,7 @@ document.addEventListener('keydown', (event) => {
   if (event.key === text.getCurrentLetter()) {
     timer.start();
     statistics.addCorrect();
-    renderAccuracy();
+    renderStatistics();
 
     currentElement.classList.remove('char--current');
 
@@ -52,7 +63,6 @@ document.addEventListener('keydown', (event) => {
     }
   } else {
     statistics.addError();
-    renderErrors();
-    renderAccuracy();
+    renderStatistics();
   }
 });

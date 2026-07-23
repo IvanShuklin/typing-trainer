@@ -25,4 +25,12 @@ export class Statistics {
 
     return Math.floor((this.correct / total) * 100);
   }
+
+  getWPM(seconds) {
+    if (seconds === 0) {
+      return 0;
+    }
+
+    return Math.floor(this.correct / 5 / (seconds / 60));
+  }
 }
