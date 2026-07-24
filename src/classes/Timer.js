@@ -1,7 +1,6 @@
 export class Timer {
   constructor(onTick) {
     this.onTick = onTick;
-
     this.timerId = null;
     this.seconds = 0;
   }
@@ -29,5 +28,12 @@ export class Timer {
 
   getSeconds() {
     return this.seconds;
+  }
+
+  getTime() {
+    return {
+      minutes: Math.floor(this.seconds / 60),
+      seconds: this.seconds % 60,
+    };
   }
 }

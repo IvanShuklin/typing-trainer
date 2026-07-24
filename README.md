@@ -20,11 +20,13 @@ A simple typing trainer built with Vanilla JavaScript. The project was created t
 
 ```
 src/
-├── app.js
 ├── classes/
 │   ├── Text.js
 │   ├── Timer.js
 │   └── Statistics.js
+├── styles/
+│   └── style.css
+├── app.js
 └── const.js
 ```
 

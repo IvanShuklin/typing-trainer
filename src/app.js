@@ -5,14 +5,18 @@ import { Statistics } from './classes/Statistics.js';
 
 const textArea = document.querySelector('.text');
 const stats = document.querySelector('.stats');
+const minutesElement = stats.querySelector('.minutes');
 const secondsElement = stats.querySelector('.seconds');
 const errorsElement = stats.querySelector('.errors');
 const accuracyElement = stats.querySelector('.accuracy');
 const wpmElement = stats.querySelector('.wpm');
 
 const text = new Text(typingText);
-const timer = new Timer((seconds) => {
-  secondsElement.textContent = String(seconds).padStart(2, '0');
+const timer = new Timer(() => {
+  const time = timer.getTime();
+
+  minutesElement.textContent = String(time.minutes).padStart(2, '0');
+  secondsElement.textContent = String(time.seconds).padStart(2, '0');
 });
 const statistics = new Statistics();
 
