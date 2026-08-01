@@ -1,4 +1,4 @@
-import { typingText } from './const.js';
+import { ignoredKeys, typingText } from './const.js';
 import { Text } from './classes/Text.js';
 import { Timer } from './classes/Timer.js';
 import { Statistics } from './classes/Statistics.js';
@@ -48,6 +48,10 @@ document.addEventListener('keydown', (event) => {
   const currentElement = text.getCurrentElement();
 
   if (!currentElement) return;
+
+  if (ignoredKeys.includes(event.key)) {
+    return;
+  }
 
   if (event.key === text.getCurrentLetter()) {
     timer.start();
