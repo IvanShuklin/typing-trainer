@@ -2,6 +2,7 @@ import { ignoredKeys, typingText } from './const.js';
 import { Text } from './classes/Text.js';
 import { Timer } from './classes/Timer.js';
 import { Statistics } from './classes/Statistics.js';
+import { Keyboard } from './classes/Keyboard.js';
 
 const textArea = document.querySelector('.text');
 const stats = document.querySelector('.stats');
@@ -19,6 +20,7 @@ const timer = new Timer(() => {
   secondsElement.textContent = String(time.seconds).padStart(2, '0');
 });
 const statistics = new Statistics();
+const keyboard = new Keyboard(document.querySelector('.keyboard'));
 
 textArea.append(...text.getElements());
 
@@ -45,6 +47,8 @@ if (text.getCurrentElement()) {
 }
 
 document.addEventListener('keydown', (event) => {
+  keyboard.highlight(event.key);
+
   const currentElement = text.getCurrentElement();
 
   if (!currentElement) return;
@@ -73,4 +77,8 @@ document.addEventListener('keydown', (event) => {
     statistics.addError();
     renderStatistics();
   }
+});
+
+document.addEventListener('keyup', (event) => {
+  keyboard.unhighlight(event.key);
 });

@@ -21,9 +21,10 @@ A simple typing trainer built with Vanilla JavaScript. The project was created t
 ```
 src/
 ├── classes/
+│   ├── Keyboard.js
+│   ├── Statistics.js
 │   ├── Text.js
-│   ├── Timer.js
-│   └── Statistics.js
+│   └── Timer.js
 ├── styles/
 │   └── style.css
 ├── app.js
@@ -48,6 +49,6 @@ git clone https://github.com/IvanShuklin/typing-trainer.git
 - [x] Error counter
 - [x] Accuracy calculation
 - [x] Words per minute (WPM)
+- [x] Keyboard highlighting
 - [ ] Random text generation
 - [ ] Restart training
-- [ ] Keyboard highlighting
