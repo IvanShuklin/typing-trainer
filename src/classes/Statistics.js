@@ -20,7 +20,7 @@ export class Statistics {
     const total = this.correct + this.errors;
 
     if (total === 0) {
-      return 100;
+      return 0;
     }
 
     return Math.floor((this.correct / total) * 100);
