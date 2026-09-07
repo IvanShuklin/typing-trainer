@@ -26,10 +26,25 @@ body {
   display: flex;
   background-color: honeydew;
   height: 200px;
-  font-size: 30px;
   border-radius: 4px;
   justify-content: center;
   align-items: center;
+  text-align: center;
+}
+
+.text-slider__previous {
+  font-size: 26px;
+  color: darkgray;
+}
+
+.text-slider__current {
+  font-size: 34px;
+  margin: 15px 0;
+}
+
+.text-slider__next {
+  font-size: 26px;
+  color: darkgray;
 }
 
 .keyboard {
