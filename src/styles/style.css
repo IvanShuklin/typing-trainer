@@ -134,3 +134,11 @@ body {
   background-color: tomato;
   width: 1.8ch;
 }
+
+.modal {
+  display: none;
+}
+
+.modal--open {
+  display: flex;
+}

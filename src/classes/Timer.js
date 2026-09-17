@@ -1,18 +1,35 @@
 export class Timer {
-  constructor(onTick) {
+  constructor(onTick, onFinish) {
     this.onTick = onTick;
+    this.onFinish = onFinish;
+
     this.timerId = null;
-    this.seconds = 0;
+    this.elapsedSeconds = 0;
+    this.remainingSeconds = 0;
+    this.duration = 0;
   }
 
-  start() {
-    if (this.timerId) {
+  start(duration) {
+    if (this.timerId || duration <= 0) {
       return;
     }
 
+    this.duration = duration;
+    this.remainingSeconds = duration;
+    this.elapsedSeconds = 0;
+
+    this.onTick(this.remainingSeconds);
+
     this.timerId = setInterval(() => {
-      this.seconds++;
-      this.onTick(this.seconds);
+      this.remainingSeconds--;
+      this.elapsedSeconds++;
+
+      this.onTick(this.remainingSeconds);
+
+      if (this.remainingSeconds <= 0) {
+        this.stop();
+        this.onFinish();
+      }
     }, 1000);
   }
 
@@ -23,17 +40,16 @@ export class Timer {
 
   reset() {
     this.stop();
-    this.seconds = 0;
+    this.elapsedSeconds = 0;
+    this.remainingSeconds = 0;
+    this.duration = 0;
   }
 
   getSeconds() {
-    return this.seconds;
+    return this.elapsedSeconds;
   }
 
-  getTime() {
-    return {
-      minutes: Math.floor(this.seconds / 60),
-      seconds: this.seconds % 60,
-    };
+  getRemainingSeconds() {
+    return this.remainingSeconds;
   }
 }

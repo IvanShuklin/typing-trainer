@@ -33,4 +33,9 @@ export class Statistics {
 
     return Math.floor(this.correct / 5 / (seconds / 60));
   }
+
+  reset() {
+    this.errors = 0;
+    this.correct = 0;
+  }
 }
