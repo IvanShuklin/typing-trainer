@@ -9,6 +9,7 @@ body {
   min-width: 1200px;
   margin: 0;
   justify-content: center;
+  font-family: 'Inter', sans-serif;
 }
 
 .display {
@@ -26,7 +27,7 @@ body {
   display: flex;
   background-color: honeydew;
   height: 200px;
-  border-radius: 4px;
+  border-radius: 8px;
   justify-content: center;
   align-items: center;
   text-align: center;
@@ -38,7 +39,7 @@ body {
 }
 
 .text-slider__current {
-  font-size: 34px;
+  font-size: 28px;
   margin: 15px 0;
 }
 
@@ -135,10 +136,68 @@ body {
   width: 1.8ch;
 }
 
-.modal {
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+}
+
+.modal-overlay[hidden] {
   display: none;
 }
 
-.modal--open {
+.modal {
+  width: 100%;
+  max-width: 550px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.modal__content {
   display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.modal__title {
+  margin: 0 0 30px;
+  font-size: 32px;
+}
+
+.modal__options {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+  justify-content: center;
+}
+
+.modal__option,
+.modal__reset {
+  min-width: 130px;
+  padding: 15px 25px;
+  background-color: honeydew;
+  border: none;
+  border-radius: 8px;
+  font: inherit;
+  font-size: 20px;
+  cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.modal__option:hover,
+.modal__reset:hover {
+  transform: translateY(-2px);
+}
+
+.modal__option:active,
+.modal__reset:active {
+  transform: translateY(0);
 }

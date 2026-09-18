@@ -19,8 +19,8 @@ export class App {
     this.accuracyElement = this.stats.querySelector('.accuracy');
     this.wpmElement = this.stats.querySelector('.wpm');
 
-    this.startModal = document.querySelector('.modal--start');
-    this.resultModal = document.querySelector('.modal--result');
+    this.startModal = document.querySelector('#modal-start');
+    this.resultModal = document.querySelector('#modal-result');
     this.resetButton = this.resultModal.querySelector('.modal__reset');
     this.resultWpm = this.resultModal.querySelector('.modal__wpm');
     this.resultAccuracy = this.resultModal.querySelector('.modal__accuracy');
@@ -60,11 +60,11 @@ export class App {
   }
 
   showStartModal() {
-    this.startModal.classList.add('modal--open');
+    this.startModal.hidden = false;
   }
 
   hideStartModal() {
-    this.startModal.classList.remove('modal--open');
+    this.startModal.hidden = true;
   }
 
   showResultModal() {
@@ -75,11 +75,11 @@ export class App {
     this.resultAccuracy.textContent = this.statistics.getAccuracy();
     this.resultErrors.textContent = this.statistics.getErrors();
 
-    this.resultModal.classList.add('modal--open');
+    this.resultModal.hidden = false;
   }
 
   hideResultModal() {
-    this.resultModal.classList.remove('modal--open');
+    this.resultModal.hidden = true;
   }
 
   renderText() {
@@ -257,6 +257,8 @@ export class App {
       if (!this.text.getCurrentLetter()) {
         this.goToNextText();
       }
+
+      return;
     }
 
     if (this.started) {
