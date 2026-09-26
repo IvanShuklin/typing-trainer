@@ -4,13 +4,14 @@ export class Keyboard {
 
     const keys = Array.from(element.querySelectorAll('.keyboard__key'));
     const entries = keys.map((key) => {
-      return [key.dataset.key, key];
+      return [key.dataset.code, key];
     });
 
     this.keysMap = new Map(entries);
   }
-  highlight(key) {
-    const keyElement = this.keysMap.get(key);
+
+  highlight(code) {
+    const keyElement = this.keysMap.get(code);
 
     if (!keyElement) {
       return;
@@ -19,13 +20,19 @@ export class Keyboard {
     keyElement.classList.add('keyboard__key--typed');
   }
 
-  unhighlight(key) {
-    const keyElement = this.keysMap.get(key);
+  unhighlight(code) {
+    const keyElement = this.keysMap.get(code);
 
     if (!keyElement) {
       return;
     }
 
     keyElement.classList.remove('keyboard__key--typed');
+  }
+
+  unhighlightAll() {
+    this.keysMap.forEach((keyElement) => {
+      keyElement.classList.remove('keyboard__key--typed');
+    });
   }
 }

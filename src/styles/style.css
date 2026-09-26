@@ -49,7 +49,6 @@ body {
 }
 
 .keyboard {
-  border: 1px solid rgb(170, 170, 170);
   padding: 5px;
   border-radius: 4px;
   margin: auto;
@@ -62,6 +61,7 @@ body {
 }
 
 .keyboard__key {
+  background-color: #fff;
   float: left;
   width: 40px;
   height: 40px;
@@ -73,7 +73,7 @@ body {
   text-align: center;
   line-height: 32px;
   text-transform: uppercase;
-  outline: none;
+  user-select: none;
 }
 
 .keyboard__key--typed {
@@ -131,9 +131,23 @@ body {
   white-space: pre-wrap;
 }
 
+.char--typed {
+  color: seagreen;
+}
+
+.char--error {
+  color: crimson;
+  text-decoration: underline;
+}
+
 .char--current {
   background-color: tomato;
   width: 1.8ch;
+}
+
+.char--current.char--error {
+  background-color: crimson;
+  color: #fff;
 }
 
 .modal-overlay {

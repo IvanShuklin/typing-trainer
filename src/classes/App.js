@@ -1,9 +1,8 @@
-import { ignoredKeys } from '../const.js';
 import { typingTexts } from '../data/typing-texts.js';
-import { Text } from '../classes/Text.js';
-import { Timer } from '../classes/Timer.js';
-import { Statistics } from '../classes/Statistics.js';
-import { Keyboard } from '../classes/Keyboard.js';
+import { Text } from './Text.js';
+import { Timer } from './Timer.js';
+import { Statistics } from './Statistics.js';
+import { Keyboard } from './Keyboard.js';
 
 export class App {
   constructor() {
@@ -26,15 +25,12 @@ export class App {
     this.resultAccuracy = this.resultModal.querySelector('.modal__accuracy');
     this.resultErrors = this.resultModal.querySelector('.modal__errors');
 
-    this.previousText = null;
-    this.currentText = this.getRandomText();
-    this.nextText = this.getRandomText(this.currentText);
-
-    this.text = new Text(this.currentText);
+    this.initTexts();
 
     this.timer = new Timer(
       (remainingSeconds) => {
         this.updateTimer(remainingSeconds);
+        this.updateWPM();
       },
       () => {
         this.finish();
@@ -50,6 +46,9 @@ export class App {
 
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleKeyUp = this.handleKeyUp.bind(this);
+    this.handleWindowBlur = this.handleWindowBlur.bind(this);
+    this.handleDurationClick = this.handleDurationClick.bind(this);
+    this.reset = this.reset.bind(this);
   }
 
   init() {
@@ -59,8 +58,21 @@ export class App {
     this.showStartModal();
   }
 
+  initTexts() {
+    this.previousText = null;
+    this.currentText = this.getRandomText();
+    this.nextText = this.getRandomText(this.currentText);
+
+    this.text = new Text(this.currentText);
+  }
+
+  isModalOpen() {
+    return !this.startModal.hidden || !this.resultModal.hidden;
+  }
+
   showStartModal() {
     this.startModal.hidden = false;
+    this.startModal.querySelector('.modal__option').focus();
   }
 
   hideStartModal() {
@@ -76,6 +88,7 @@ export class App {
     this.resultErrors.textContent = this.statistics.getErrors();
 
     this.resultModal.hidden = false;
+    this.resetButton.focus();
   }
 
   hideResultModal() {
@@ -89,8 +102,11 @@ export class App {
 
     this.nextTextElement.textContent = this.nextText;
   }
+
   getRandomText(excludedText) {
-    const availableTexts = typingTexts.filter((text) => text !== excludedText);
+    const filteredTexts = typingTexts.filter((text) => text !== excludedText);
+    const availableTexts =
+      filteredTexts.length > 0 ? filteredTexts : typingTexts;
     const randomIndex = Math.floor(Math.random() * availableTexts.length);
 
     return availableTexts[randomIndex];
@@ -121,9 +137,9 @@ export class App {
     );
   }
 
-  updateFinalStatistics() {
+  updateStatistics() {
+    this.updateErrors();
     this.updateAccuracy();
-    this.updateWPM();
   }
 
   updateTimer(seconds) {
@@ -146,7 +162,8 @@ export class App {
   finish() {
     this.finished = true;
     this.timer.stop();
-    this.updateFinalStatistics();
+    this.updateStatistics();
+    this.updateWPM();
     this.showResultModal();
   }
 
@@ -158,11 +175,7 @@ export class App {
     this.finished = false;
     this.duration = 0;
 
-    this.previousText = null;
-    this.currentText = this.getRandomText();
-    this.nextText = this.getRandomText(this.currentText);
-
-    this.text = new Text(this.currentText);
+    this.initTexts();
 
     this.renderText();
     this.highlightCurrentLetter();
@@ -206,32 +219,48 @@ export class App {
   addListeners() {
     document.addEventListener('keydown', this.handleKeyDown);
     document.addEventListener('keyup', this.handleKeyUp);
+    window.addEventListener('blur', this.handleWindowBlur);
 
-    this.startModal.addEventListener('click', (event) => {
-      const button = event.target.closest('[data-duration]');
-
-      if (!button) {
-        return;
-      }
-
-      this.duration = Number(button.dataset.duration);
-      this.updateTimer(this.duration);
-      this.hideStartModal();
-    });
-
-    this.resetButton.addEventListener('click', () => {
-      this.reset();
-    });
+    this.startModal.addEventListener('click', this.handleDurationClick);
+    this.resetButton.addEventListener('click', this.reset);
   }
 
-  handleKeyDown(event) {
-    this.keyboard.highlight(event.key);
+  handleDurationClick(event) {
+    const button = event.target.closest('[data-duration]');
 
-    if (this.finished) {
+    if (!button) {
       return;
     }
 
-    if (ignoredKeys.includes(event.key)) {
+    this.duration = Number(button.dataset.duration);
+    this.updateTimer(this.duration);
+    this.hideStartModal();
+  }
+
+  handleKeyDown(event) {
+    this.keyboard.highlight(event.code);
+
+    if (!this.resultModal.hidden && event.key === 'Escape') {
+      this.reset();
+      return;
+    }
+
+    if (this.finished || this.isModalOpen()) {
+      return;
+    }
+
+    if (event.key === 'Tab') {
+      event.preventDefault();
+      return;
+    }
+
+    if (!isPrintableKey(event)) {
+      return;
+    }
+
+    event.preventDefault();
+
+    if (event.repeat) {
       return;
     }
 
@@ -243,16 +272,13 @@ export class App {
 
     if (event.key === currentLetter) {
       if (!this.started) {
-        if (this.duration <= 0) {
-          return;
-        }
-
         this.start();
       }
 
       this.statistics.addCorrect();
+      this.text.markCurrentCorrect();
       this.moveToNextLetter();
-      this.updateErrors();
+      this.updateStatistics();
 
       if (!this.text.getCurrentLetter()) {
         this.goToNextText();
@@ -263,11 +289,22 @@ export class App {
 
     if (this.started) {
       this.statistics.addError();
-      this.updateErrors();
+      this.text.markCurrentError();
+      this.updateStatistics();
     }
   }
 
   handleKeyUp(event) {
-    this.keyboard.unhighlight(event.key);
+    this.keyboard.unhighlight(event.code);
   }
+
+  handleWindowBlur() {
+    this.keyboard.unhighlightAll();
+  }
+}
+
+function isPrintableKey(event) {
+  return (
+    event.key.length === 1 && !event.ctrlKey && !event.metaKey && !event.altKey
+  );
 }

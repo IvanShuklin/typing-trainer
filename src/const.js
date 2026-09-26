@@ -1,3 +1,3 @@
-const ignoredKeys = ['Shift', 'Control', 'Alt', 'CapsLock', 'Tab', 'Escape'];
+const TIMER_TICK_INTERVAL = 100;
 
-export { ignoredKeys };
+export { TIMER_TICK_INTERVAL };

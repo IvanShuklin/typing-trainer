@@ -4,11 +4,13 @@ A simple typing trainer built with Vanilla JavaScript. The project was created t
 
 ## Features
 
-- Type predefined text
-- Highlight the current character
-- Error counter
-- Typing accuracy calculation
-- Typing timer
+- Selectable session duration (30 / 60 / 120 seconds)
+- Random sequence of typing texts
+- Highlight the current character, correct characters and mistakes
+- On-screen keyboard highlighting (layout-independent, based on `event.code`)
+- Live WPM, accuracy and error counter
+- Countdown timer
+- Result screen with restart
 
 ## Technologies
 
@@ -21,10 +23,13 @@ A simple typing trainer built with Vanilla JavaScript. The project was created t
 ```
 src/
 ├── classes/
+│   ├── App.js
 │   ├── Keyboard.js
 │   ├── Statistics.js
 │   ├── Text.js
 │   └── Timer.js
+├── data/
+│   └── typing-texts.js
 ├── styles/
 │   └── style.css
 ├── app.js
@@ -50,5 +55,6 @@ git clone https://github.com/IvanShuklin/typing-trainer.git
 - [x] Accuracy calculation
 - [x] Words per minute (WPM)
 - [x] Keyboard highlighting
-- [ ] Random text generation
-- [ ] Restart training
+- [x] Random text generation
+- [x] Restart training
+- [x] Selectable session duration

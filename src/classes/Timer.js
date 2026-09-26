@@ -1,10 +1,13 @@
+import { TIMER_TICK_INTERVAL } from '../const.js';
+
 export class Timer {
   constructor(onTick, onFinish) {
     this.onTick = onTick;
     this.onFinish = onFinish;
 
     this.timerId = null;
-    this.elapsedSeconds = 0;
+    this.startTime = null;
+    this.stopTime = null;
     this.remainingSeconds = 0;
     this.duration = 0;
   }
@@ -16,37 +19,62 @@ export class Timer {
 
     this.duration = duration;
     this.remainingSeconds = duration;
-    this.elapsedSeconds = 0;
+    this.startTime = Date.now();
+    this.stopTime = null;
 
     this.onTick(this.remainingSeconds);
 
     this.timerId = setInterval(() => {
-      this.remainingSeconds--;
-      this.elapsedSeconds++;
+      this.tick();
+    }, TIMER_TICK_INTERVAL);
+  }
 
-      this.onTick(this.remainingSeconds);
+  tick() {
+    const remainingSeconds = Math.max(
+      this.duration - Math.floor(this.getSeconds()),
+      0,
+    );
 
-      if (this.remainingSeconds <= 0) {
-        this.stop();
-        this.onFinish();
-      }
-    }, 1000);
+    if (remainingSeconds === this.remainingSeconds) {
+      return;
+    }
+
+    this.remainingSeconds = remainingSeconds;
+    this.onTick(this.remainingSeconds);
+
+    if (this.remainingSeconds <= 0) {
+      this.stop();
+      this.onFinish();
+    }
   }
 
   stop() {
+    if (!this.timerId) {
+      return;
+    }
+
     clearInterval(this.timerId);
     this.timerId = null;
+    this.stopTime = Date.now();
   }
 
   reset() {
     this.stop();
-    this.elapsedSeconds = 0;
+    this.startTime = null;
+    this.stopTime = null;
     this.remainingSeconds = 0;
     this.duration = 0;
   }
 
   getSeconds() {
-    return this.elapsedSeconds;
+    if (this.startTime === null) {
+      return 0;
+    }
+
+    const endTime = this.stopTime ?? Date.now();
+    const elapsedSeconds = (endTime - this.startTime) / 1000;
+
+    return Math.min(elapsedSeconds, this.duration);
   }
 
   getRemainingSeconds() {

@@ -31,6 +31,14 @@ export class Text {
     return this.text[this.currentIndex];
   }
 
+  markCurrentCorrect() {
+    this.getCurrentElement()?.classList.add('char--typed');
+  }
+
+  markCurrentError() {
+    this.getCurrentElement()?.classList.add('char--error');
+  }
+
   next() {
     this.currentIndex++;
   }
