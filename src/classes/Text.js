@@ -2,15 +2,16 @@ export class Text {
   constructor(text) {
     this.text = text;
     this.currentIndex = 0;
+    this.chars = text.split('').map((char) => ({ char, wrongKeys: [] }));
     this.elements = this.createElements();
   }
 
   createElements() {
-    return this.text.split('').map((letter) => {
+    return this.chars.map(({ char }) => {
       const span = document.createElement('span');
 
       span.classList.add('char');
-      span.textContent = letter;
+      span.textContent = char;
 
       return span;
     });
@@ -31,11 +32,16 @@ export class Text {
     return this.text[this.currentIndex];
   }
 
+  getTypedChars() {
+    return this.chars.slice(0, this.currentIndex);
+  }
+
   markCurrentCorrect() {
     this.getCurrentElement()?.classList.add('char--typed');
   }
 
-  markCurrentError() {
+  markCurrentError(key) {
+    this.chars[this.currentIndex]?.wrongKeys.push(key);
     this.getCurrentElement()?.classList.add('char--error');
   }
 

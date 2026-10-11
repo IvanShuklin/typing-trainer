@@ -35,7 +35,6 @@ body {
 
 .text-slider__previous {
   font-size: 26px;
-  color: darkgray;
 }
 
 .text-slider__current {
@@ -45,7 +44,6 @@ body {
 
 .text-slider__next {
   font-size: 26px;
-  color: darkgray;
 }
 
 .keyboard {
@@ -173,6 +171,10 @@ body {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
+.modal--result {
+  max-width: 800px;
+}
+
 .modal__content {
   display: flex;
   flex-direction: column;
@@ -189,6 +191,36 @@ body {
   gap: 20px;
   width: 100%;
   justify-content: center;
+}
+
+.history {
+  width: 100%;
+  max-height: 240px;
+  margin: 10px 0 30px;
+  padding: 12px 16px;
+  overflow-y: auto;
+  background-color: honeydew;
+  border-radius: 8px;
+  font-size: 18px;
+  line-height: 1.6;
+  text-align: left;
+}
+
+.history:empty {
+  display: none;
+}
+
+.history__text {
+  margin: 0 0 8px;
+}
+
+.history__text:last-child {
+  margin-bottom: 0;
+}
+
+.history .char--error {
+  background-color: rgba(220, 20, 60, 0.12);
+  cursor: help;
 }
 
 .modal__option,

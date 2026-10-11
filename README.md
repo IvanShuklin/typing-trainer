@@ -10,7 +10,7 @@ A simple typing trainer built with Vanilla JavaScript. The project was created t
 - On-screen keyboard highlighting (layout-independent, based on `event.code`)
 - Live WPM, accuracy and error counter
 - Countdown timer
-- Result screen with restart
+- Result screen with the typed text, mistakes highlighted, and restart
 
 ## Technologies
 
@@ -24,6 +24,7 @@ A simple typing trainer built with Vanilla JavaScript. The project was created t
 src/
 ├── classes/
 │   ├── App.js
+│   ├── History.js
 │   ├── Keyboard.js
 │   ├── Statistics.js
 │   ├── Text.js

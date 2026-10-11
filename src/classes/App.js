@@ -3,6 +3,7 @@ import { Text } from './Text.js';
 import { Timer } from './Timer.js';
 import { Statistics } from './Statistics.js';
 import { Keyboard } from './Keyboard.js';
+import { History } from './History.js';
 
 export class App {
   constructor() {
@@ -39,6 +40,7 @@ export class App {
 
     this.statistics = new Statistics();
     this.keyboard = new Keyboard(document.querySelector('.keyboard'));
+    this.history = new History(this.resultModal.querySelector('.history'));
 
     this.duration = 0;
     this.started = false;
@@ -86,6 +88,7 @@ export class App {
 
     this.resultAccuracy.textContent = this.statistics.getAccuracy();
     this.resultErrors.textContent = this.statistics.getErrors();
+    this.history.render();
 
     this.resultModal.hidden = false;
     this.resetButton.focus();
@@ -113,6 +116,8 @@ export class App {
   }
 
   goToNextText() {
+    this.history.add(this.text.getTypedChars());
+
     this.previousText = this.currentText;
     this.currentText = this.nextText;
     this.nextText = this.getRandomText(this.currentText);
@@ -162,6 +167,7 @@ export class App {
   finish() {
     this.finished = true;
     this.timer.stop();
+    this.history.add(this.text.getTypedChars());
     this.updateStatistics();
     this.updateWPM();
     this.showResultModal();
@@ -170,6 +176,7 @@ export class App {
   reset() {
     this.timer.reset();
     this.statistics.reset();
+    this.history.clear();
 
     this.started = false;
     this.finished = false;
@@ -289,7 +296,7 @@ export class App {
 
     if (this.started) {
       this.statistics.addError();
-      this.text.markCurrentError();
+      this.text.markCurrentError(event.key);
       this.updateStatistics();
     }
   }
